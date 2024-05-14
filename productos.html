@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" id="form-product">
+        <input type="text" name="nombre" id="nombre" placeholder="nombre del producto">
+        <input type="text" name="nombre" id="nombre" placeholder="fecha del producto">
+    </form>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import {getFirestore,collection,addDoc,onSnapshot,deleteDoc,doc}
+        from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBHjZVohVBcozY7mO-oZft-Lm9H2pNcXis",
+            authDomain: "proyectoprueba-1c41e.firebaseapp.com",
+            projectId: "proyectoprueba-1c41e",
+            storageBucket: "proyectoprueba-1c41e.appspot.com",
+            messagingSenderId: "284026098134",
+            appId: "1:284026098134:web:ec912ce8cf88969b589477"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        const productform = document.getElementById("form-product");
+        productform.addEventListener("submit",async(e)=>{
+            e.preventDefault();
+            await addDoc(collection(db,"producto"),{
+                nombre:productform.nombre.value,
+                fecha: productform.fecha.value
+            });
+            productform.reset();
+        })
+    </script>
+</body>
+</html>
