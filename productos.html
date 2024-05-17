@@ -11,21 +11,21 @@
     <h1 style="text-align: center;">Registro de Conductores</h1>
 </head>
 <body>
-    <form action="" id="formularioProducto">
+    <form action="" id="formularioConductor">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label for=""><i>NOMBRE:</i></label>
                 <input type="text" id="txt_nombre" class="form-control" placeholder="Ingrese su nombre">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label for=""><i>APELLIDO:</i></label>&nbsp;&nbsp;&nbsp;
                 <input type="text" id="txt_apellido" class="form-control" placeholder="Ingrese su apellido">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label for=""><i>EDAD:</i></label>&nbsp;&nbsp;&nbsp;
                 <input type="number" id="txt_edad" class="form-control" placeholder="Ingrese su edad">
             </div>
-            <div>
+            <div class="col-md-3">
                 <label for=""><i>CÉDULA:</i></label>&nbsp;&nbsp;&nbsp;
                 <input type="text" id="txt_cedula" class="form-control" placeholder="Ingrese su cédula">
             </div>
@@ -38,7 +38,7 @@
             </div>
             <div class="col-md-4">
                 <label for=""><u>CORREO ELECTRÓNICO:</u></label>&nbsp;
-                <input type="email" id="txt_email" required class="form-control" placeholder="pepito@ejemplo.com>
+                <input type="email" id="txt_email" required class="form-control" placeholder="pepito@ejemplo.com">
             </div>
             <div class="col-md-4">
                 <label for=""><strong>TIPO DE LICENCIA:</strong></label>
@@ -89,7 +89,7 @@
         const app = initializeApp(firebaseConfig);
         const baseDatos = getFirestore(app);
 
-        const productos = document.getElementById("formularioProducto");
+        const productos = document.getElementById("formularioConductor");
         productos.addEventListener("submit",async(e)=>{
             e.preventDefault();
             await addDoc(collection(baseDatos,"productos"),{
