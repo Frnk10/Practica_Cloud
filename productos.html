@@ -8,7 +8,7 @@
     <!--JS de Boostrap-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <title>Document</title>
-    <h1>Registro de Conductores</h1>
+    <h1 style="text-align: center;">Registro de Conductores</h1>
 </head>
 <body>
     <form action="" id="formularioProducto">
@@ -19,16 +19,53 @@
             </div>
             <div class="col-md-4">
                 <label for=""><i>APELLIDO:</i></label>&nbsp;&nbsp;&nbsp;
-                <input type="text" id="txt_apellido" class="form-control" placeholder="Ingrese su apelliedo">
+                <input type="text" id="txt_apellido" class="form-control" placeholder="Ingrese su apellido">
             </div>
             <div class="col-md-4">
                 <label for=""><i>EDAD:</i></label>&nbsp;&nbsp;&nbsp;
                 <input type="number" id="txt_edad" class="form-control" placeholder="Ingrese su edad">
             </div>
+            <div>
+                <label for=""><i>CÉDULA:</i></label>&nbsp;&nbsp;&nbsp;
+                <input type="text" id="txt_cedula" class="form-control" placeholder="Ingrese su cédula">
+            </div>
         </div>
-        <input type="text" id="nombre" placeholder="nombre del producto">
-        <input type="text" id="fecha" placeholder="fecha del producto">
-        <button type="submit">Agregar animal</button>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                <label for=""><u>CELULAR:</u></label>&nbsp;
+                <input type="text" id="txt_celular" required class="form-control" placeholder="Ingrese su contácto">
+            </div>
+            <div class="col-md-4">
+                <label for=""><u>CORREO ELECTRÓNICO:</u></label>&nbsp;
+                <input type="email" id="txt_email" required class="form-control" placeholder="pepito@ejemplo.com>
+            </div>
+            <div class="col-md-4">
+                <label for=""><strong>TIPO DE LICENCIA:</strong></label>
+                <select name="" id="lista_licencia" required class="form-control">
+                    <option value="">--Seleccione--</option>
+                    <option value="">Tipo B</option>
+                    <option value="">Tipo C</option>
+                    <option value="">Tipo D</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                <label for=""><i>LICENCIA:</i></label>
+                <input type="text" id="txt_licencia" required class="form-control" placeholder="Ingrese su licencia">
+            </div>
+            <div class="col-md-4">
+                <label for=""><i>NOMBRE UNIDAD:</i></label>&nbsp;
+                <input type="txt" id="txt_unidad" required class="form-control" placeholder="Ingrese el nombre de la Unidad">
+            </div>
+            <div>
+                <label for=""><i>CAPACIDAD:</i></label>&nbsp;
+                <input type="text" id="txt_capacidad" required class="form-control" placeholder="Capidad de la Unidad">
+            </div>
+        </div>
+        <button type="submit">Agregar Conductor</button>
     </form>
     <script type="module">
         // Import the functions you need from the SDKs you need
