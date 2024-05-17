@@ -65,7 +65,8 @@
                 <input type="text" id="txt_capacidad" required class="form-control" placeholder="Capidad de la Unidad">
             </div>
         </div>
-        <button type="submit">Agregar Conductor</button>
+        <br>
+        <button type="submit" style="justify-content: center;">Agregar Conductor</button>
     </form>
     <script type="module">
         // Import the functions you need from the SDKs you need
@@ -89,12 +90,12 @@
         const app = initializeApp(firebaseConfig);
         const baseDatos = getFirestore(app);
 
-        const productos = document.getElementById("formularioConductor");
-        productos.addEventListener("submit",async(e)=>{
+        const chofer = document.getElementById("formularioConductor");
+        chofer.addEventListener("submit",async(e)=>{
             e.preventDefault();
-            await addDoc(collection(baseDatos,"productos"),{
-                nombre: productos.nombre.value,
-                fecha: productos.fecha.value
+            await addDoc(collection(baseDatos,"persona"),{
+                nombre: chofer._txt_nombre.value,
+                apellido: chofer.txt_apellido.value
             });
             productos.reset();
         });
