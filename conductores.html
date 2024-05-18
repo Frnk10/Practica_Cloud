@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--CSS de Boostrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!--JS de Boostrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <title>Document</title>
+    <h1 style="text-align: center;">Registro de Conductores</h1>
+</head>
+<body>
+    <form action="" id="formularioConductor">
+        <div class="row">
+            <div class="col-md-3">
+                <label for=""><i>NOMBRE:</i></label>
+                <input type="text" id="txt_nombre" required class="form-control" placeholder="Ingrese su nombre">
+            </div>
+            <div class="col-md-3">
+                <label for=""><i>APELLIDO:</i></label>&nbsp;&nbsp;&nbsp;
+                <input type="text" id="txt_apellido" required class="form-control" placeholder="Ingrese su apellido">
+            </div>
+            <div class="col-md-3">
+                <label for=""><i>EDAD:</i></label>&nbsp;&nbsp;&nbsp;
+                <input type="number" id="txt_edad" required class="form-control" placeholder="Ingrese su edad">
+            </div>
+            <div class="col-md-3">
+                <label for=""><i>CÉDULA:</i></label>&nbsp;&nbsp;&nbsp;
+                <input type="text" id="txt_cedula" required class="form-control" placeholder="Ingrese su cédula">
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                <label for=""><i>CELULAR:</i></label>&nbsp;
+                <input type="text" id="txt_celular" required class="form-control" placeholder="Ingrese su contácto">
+            </div>
+            <div class="col-md-4">
+                <label for=""><i>CORREO ELECTRÓNICO:</i></label>&nbsp;
+                <input type="email" id="txt_email" required class="form-control" placeholder="pepito@ejemplo.com">
+            </div>
+            <div class="col-md-4">
+                <label for=""><i>TIPO DE LICENCIA:</i></label>
+                <select id="lista_licencia" required class="form-control">
+                    <option value="">--Escoja--</option>
+                    <option value="">Tipo B</option>
+                    <option value="">Tipo C</option>
+                    <option value="">Tipo D</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                <label for=""><i>LICENCIA:</i></label>
+                <input type="text" id="txt_licencia" required class="form-control" placeholder="Ingrese su licencia">
+            </div>
+            <div class="col-md-4">
+                <label for=""><i>NOMBRE UNIDAD:</i></label>&nbsp;
+                <input type="text" id="txt_unidad" required class="form-control" placeholder="Ingrese el nombre de la Unidad">
+            </div>
+            <div class="col-md-4">
+                <label for=""><i>CAPACIDAD:</i></label>&nbsp;
+                <input type="number" id="txt_capacidad" required class="form-control" placeholder="Capidad de la Unidad">
+            </div>
+        </div>
+        <br>
+        <div class="col-md-12 text-center">
+            <button type="reset">Limpiar Campos</button>&nbsp;&nbsp;
+            <button type="submit">Agregar Conductor</button>
+        </div>
+
+    </form>
+    
+    <table class="table">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">NOMBRE</th>
+            <th scope="col">APELLIDO</th>
+            <th scope="col">EDAD</th>
+            <th scope="col">CÉDULA</th>
+            <th scope="col">CELULAR</th>
+            <th scope="col">CORREO ELECTRÓNICO</th>
+            <th scope="col">TIPO DE LICENCIA</th>
+            <th scope="col">LICENCIA</th>
+            <th scope="col">NOMBRE DE UNIDAD</th>
+            <th scope="col">CAPACIDAD</th>
+          </tr>
+        </thead>
+        <tbody id="tablaConductor">
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+            <td>@mdo</td>
+            <td>@mdo</td>
+            <td>@mdo</td>
+            <td>@mdo</td>
+            <td>@mdo</td>
+            <td>@mdo</td>
+          </tr>
+        </tbody>
+    </table>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        //Importación para realizar el CRUD
+        import {getFirestore,collection,addDoc,onSnapshot,deleteDoc,doc} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyBHjZVohVBcozY7mO-oZft-Lm9H2pNcXis",
+          authDomain: "proyectoprueba-1c41e.firebaseapp.com",
+          projectId: "proyectoprueba-1c41e",
+          storageBucket: "proyectoprueba-1c41e.appspot.com",
+          messagingSenderId: "284026098134",
+          appId: "1:284026098134:web:ec912ce8cf88969b589477"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const baseDatos = getFirestore(app);
+
+        const chofer = document.getElementById("formularioConductor");
+        chofer.addEventListener("submit",async(e)=>{
+            e.preventDefault();
+            await addDoc(collection(baseDatos,"persona"),{
+                nombre: chofer.txt_nombre.value,
+                apellido: chofer.txt_apellido.value,
+                edad: chofer.txt_edad.value,
+                cedula: chofer.txt_cedula.value,
+                celular: chofer.txt_celular.value,
+                email: chofer.txt_email.value,
+                tipoLicencia: chofer.lista_licencia.value,
+                licencia: chofer.txt_licencia.value,
+                nombreUnidad: chofer.txt_unidad.value,
+                capacidad: chofer.txt_capacidad.value
+            });
+            chofer.reset();
+        });
+        //LEER DATOS
+        const tabla = document.getElementById('tablaConductor');
+        baseDatos.collection("persona").get().then((querySnapshot)=>{
+            tabla.innerHTML = '';
+            querySnapshot.forEach((doc)=>{
+                console.log(`${doc.id}=>${doc.data().first}`);
+                tabla.innerHTML += `
+                <tr>
+                    <th scope="row">${doc.id}</th>
+                    <td>${doc.data().nombre}</td>
+                    <td>${doc.data().apellido}</td>
+                    <td>@mdo</td>
+                    <td>@mdo</td>
+                    <td>@mdo</td>
+                    <td>@mdo</td>
+                    <td>@mdo</td>
+                    <td>@mdo</td>
+                </tr>
+                `
+            });
+        });
+      </script>
+</body>
+</html>
