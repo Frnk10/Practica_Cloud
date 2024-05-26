@@ -199,9 +199,10 @@
         console.log('Email:', email1, 'Clave:', clave1);
         createUserWithEmailAndPassword(auth, email1, clave1)
         .then(cred => {
-            alert('Usuario registrado:', cred.user);
+            alert('Usuario registrado:', email1);
             registroModal.reset();
-            $('#registrarModal').modal('hide');
+            const modal = new bootstrap.Modal(document.getElementById('registrarModal'));
+            modal.hide();
         })
         .catch(error => {
             const errorCode = error.code;
@@ -209,10 +210,11 @@
             if (error.code === 'auth/email-already-in-use') {
                 // Mostrar mensaje de correo electrónico ya en uso
                 alert('El correo electrónico ya está en uso. Por favor, utilice otro.');
-            } else {
+            } else if(errorCode == 'auth/weak-password'){
+                alert('La contraseña debe tener mínimo 6 caracteres.');
+            }else{
                 // Mostrar mensaje de error genérico
                 alert('Error al registrar el usuario. Por favor, verifica tus datos e intenta nuevamente.');
-                document.getElementById('errorRegistro').classList.remove('d-none');
             }
         });
     });
