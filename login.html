@@ -47,7 +47,8 @@
                         </div>
     
                         <!-- Botones de Inicio -->
-                        <button type="submit" class="btn btn-primary btn-lg btn_inicio">Iniciar Sesión</button>
+                        <button type="button" class="btn btn-primary btn-lg btn_inicio" id="btn_iniciar">Iniciar Sesión</button><br>
+                        <p>¿Aún no tienes una cuenta? <a href="#" id="abrirModalRegistro" data-bs-toggle="modal" data-bs-target="#registrarModal">Regístrate aquí</a></p>
 
                         <div class="divider d-flex align-items-center my-4">
                             <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
@@ -67,6 +68,30 @@
             </div>
         </div>
     </section>
+    <!-- Modal de Registro -->
+    <div class="modal fade" id="registrarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Registrarse</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registrar-form">
+                        <div class="mb-3">
+                            <label for="registrar-email" class="form-label">Correo electrónico</label>
+                            <input type="email" class="form-control" id="registrar-email" placeholder="ejemplo@ejemplo.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registrar-clave" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="registrar-clave" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Registrar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <style>
     .encabezado{
@@ -117,7 +142,8 @@
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
     //Importación para autentucación de usuarios
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, 
+    sendEmailVerification, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
   
@@ -163,5 +189,77 @@
             }
         );
     })
+    //REGISTRO
+    // Registrar Usuario
+    const registroModal = document.querySelector('#registrar-form');
+    registroModal.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email1 = document.querySelector('#registrar-email').value;
+        const clave1 = document.querySelector('#registrar-clave').value;
+        console.log('Email:', email1, 'Clave:', clave1);
+        createUserWithEmailAndPassword(auth, email1, clave1)
+        .then(cred => {
+            alert('Usuario registrado:', cred.user);
+            registroModal.reset();
+            $('#registrarModal').modal('hide');
+        })
+        .catch(error => {
+            const errorCode = error.code;
+            console.error('Error al registrar el usuario:', error);
+            if (error.code === 'auth/email-already-in-use') {
+                // Mostrar mensaje de correo electrónico ya en uso
+                alert('El correo electrónico ya está en uso. Por favor, utilice otro.');
+            } else {
+                // Mostrar mensaje de error genérico
+                alert('Error al registrar el usuario. Por favor, verifica tus datos e intenta nuevamente.');
+                document.getElementById('errorRegistro').classList.remove('d-none');
+            }
+        });
+    });
+    //LOGUEO CON CORREO
+    const login = document.getElementById('btn_iniciar');
+    login.addEventListener('click',(e) => {
+        e.preventDefault();
+        var email = document.getElementById('input_email').value;
+        var clave = document.getElementById('input_clave').value;
+        signInWithEmailAndPassword(auth,email,clave).then((cred) =>{
+            alert("Usuario Logueado");
+            window.location.href = "conductores.html";
+        }).catch(error =>{
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            if(errorCode == 'auth/invalid-email')
+                alert('El correo no es válido');
+            else if(errorCode == 'auth/user-disabled')
+                alert('El usuario ha sido deshabilitado');
+            else if(errorCode == 'auth/wrong-password')
+                alert('El suaurio o Contraseña son incorrectos');
+            else if(errorCode == 'auth/user-not-found')
+                alert('El usuario no existe');
+            else if (errorCode === 'auth/invalid-credential')
+                alert('Credenciales no válidas. Por favor, revisa tu configuración de Firebase.');
+            else if(errorCode == 'auth/missing-password')
+                alert('Ingrese una contraseña');
+            else{
+                alert('Error desconocido: ' + errorMessage);
+            }      
+        })
+    })
+    //CERRAR SESEIÓN
+    /*cerrar.addEventListener('click',(e) => {
+        auth.signOut().then(() => {
+            alert('Seseión cerrada');
+        }).catch((error) => {
+            alert('Error al cerrar sesión');
+        });
+    })
+    /*auth.onAuthStateChanged(user =>{
+        if(user){
+            console.log("Usuario Activo");
+            var email = user.emailVerified;
+
+        }
+    })*/
   </script>
 </html>
